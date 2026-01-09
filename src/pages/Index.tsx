@@ -9,18 +9,18 @@ import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const mockPlayers = [
-  { id: 1, username: 'Player_12345', status: 'online', lastSeen: 'Now', game: 'Adopt Me!', playtime: '247h', level: 89 },
-  { id: 2, username: 'RobloxKid99', status: 'offline', lastSeen: '15 min ago', game: 'Brookhaven', playtime: '183h', level: 45 },
-  { id: 3, username: 'ProGamer2024', status: 'online', lastSeen: 'Now', game: 'Blox Fruits', playtime: '512h', level: 142 },
-  { id: 4, username: 'CoolDude777', status: 'ingame', lastSeen: 'In-game', game: 'Tower of Hell', playtime: '98h', level: 67 },
-  { id: 5, username: 'BuildMaster', status: 'online', lastSeen: 'Now', game: 'Build A Boat', playtime: '356h', level: 103 },
+  { id: 1, username: 'xX_DarkPhoenix_Xx420', status: 'online', lastSeen: 'Now', game: 'Adopt Me!', playtime: '247h', level: 89 },
+  { id: 2, username: 'Nightmare_Reaper2k8', status: 'offline', lastSeen: '15 min ago', game: 'Brookhaven', playtime: '183h', level: 45 },
+  { id: 3, username: 'Shadow_Assassin_YT', status: 'online', lastSeen: 'Now', game: 'Blox Fruits', playtime: '512h', level: 142 },
+  { id: 4, username: 'iiCyber_Wolf_TTV', status: 'ingame', lastSeen: 'In-game', game: 'Tower of Hell', playtime: '98h', level: 67 },
+  { id: 5, username: 'Toxic_Venom_Pro999', status: 'online', lastSeen: 'Now', game: 'Build A Boat', playtime: '356h', level: 103 },
 ];
 
 const mockMessages = [
-  { id: 1, from: 'Player_12345', to: 'RobloxKid99', text: 'Saw something strange...', time: '14:32', read: true },
-  { id: 2, from: 'ProGamer2024', to: 'Player_12345', text: 'Someone is watching me', time: '14:28', read: true },
-  { id: 3, from: 'RobloxKid99', to: 'ProGamer2024', text: 'What is happening?', time: '14:15', read: false },
-  { id: 4, from: 'CoolDude777', to: 'BuildMaster', text: 'Found a secret code', time: '13:45', read: true },
+  { id: 1, from: 'xX_DarkPhoenix_Xx420', to: 'Nightmare_Reaper2k8', text: 'Saw something strange...', time: '14:32', read: true },
+  { id: 2, from: 'Shadow_Assassin_YT', to: 'xX_DarkPhoenix_Xx420', text: 'Someone is watching me', time: '14:28', read: true },
+  { id: 3, from: 'Nightmare_Reaper2k8', to: 'Shadow_Assassin_YT', text: 'What is happening?', time: '14:15', read: false },
+  { id: 4, from: 'iiCyber_Wolf_TTV', to: 'Toxic_Venom_Pro999', text: 'Found a secret code', time: '13:45', read: true },
 ];
 
 const mockCameras = [
