@@ -9,18 +9,27 @@ import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const mockPlayers = [
-  { id: 1, username: 'Player_12345', status: 'online', lastSeen: 'Сейчас', game: 'Adopt Me!', playtime: '247h', level: 89 },
-  { id: 2, username: 'RobloxKid99', status: 'offline', lastSeen: '15 мин назад', game: 'Brookhaven', playtime: '183h', level: 45 },
-  { id: 3, username: 'ProGamer2024', status: 'online', lastSeen: 'Сейчас', game: 'Blox Fruits', playtime: '512h', level: 142 },
-  { id: 4, username: 'CoolDude777', status: 'ingame', lastSeen: 'В игре', game: 'Tower of Hell', playtime: '98h', level: 67 },
-  { id: 5, username: 'BuildMaster', status: 'online', lastSeen: 'Сейчас', game: 'Build A Boat', playtime: '356h', level: 103 },
+  { id: 1, username: 'Player_12345', status: 'online', lastSeen: 'Now', game: 'Adopt Me!', playtime: '247h', level: 89 },
+  { id: 2, username: 'RobloxKid99', status: 'offline', lastSeen: '15 min ago', game: 'Brookhaven', playtime: '183h', level: 45 },
+  { id: 3, username: 'ProGamer2024', status: 'online', lastSeen: 'Now', game: 'Blox Fruits', playtime: '512h', level: 142 },
+  { id: 4, username: 'CoolDude777', status: 'ingame', lastSeen: 'In-game', game: 'Tower of Hell', playtime: '98h', level: 67 },
+  { id: 5, username: 'BuildMaster', status: 'online', lastSeen: 'Now', game: 'Build A Boat', playtime: '356h', level: 103 },
 ];
 
 const mockMessages = [
-  { id: 1, from: 'Player_12345', to: 'RobloxKid99', text: 'Видел что-то странное...', time: '14:32', read: true },
-  { id: 2, from: 'ProGamer2024', to: 'Player_12345', text: 'За мной кто-то следит', time: '14:28', read: true },
-  { id: 3, from: 'RobloxKid99', to: 'ProGamer2024', text: 'Что происходит?', time: '14:15', read: false },
-  { id: 4, from: 'CoolDude777', to: 'BuildMaster', text: 'Нашел секретный код', time: '13:45', read: true },
+  { id: 1, from: 'Player_12345', to: 'RobloxKid99', text: 'Saw something strange...', time: '14:32', read: true },
+  { id: 2, from: 'ProGamer2024', to: 'Player_12345', text: 'Someone is watching me', time: '14:28', read: true },
+  { id: 3, from: 'RobloxKid99', to: 'ProGamer2024', text: 'What is happening?', time: '14:15', read: false },
+  { id: 4, from: 'CoolDude777', to: 'BuildMaster', text: 'Found a secret code', time: '13:45', read: true },
+];
+
+const mockCameras = [
+  { id: 1, name: 'CAM-01: Adopt Me Lobby', game: 'Adopt Me!', status: 'active', viewers: 342, location: 'Main Plaza', quality: 'HD' },
+  { id: 2, name: 'CAM-02: Brookhaven Streets', game: 'Brookhaven', status: 'active', viewers: 278, location: 'Downtown', quality: '4K' },
+  { id: 3, name: 'CAM-03: Blox Fruits Arena', game: 'Blox Fruits', status: 'active', viewers: 195, location: 'PvP Zone', quality: 'HD' },
+  { id: 4, name: 'CAM-04: Tower of Hell', game: 'Tower of Hell', status: 'recording', viewers: 156, location: 'Floor 45', quality: 'HD' },
+  { id: 5, name: 'CAM-05: Build A Boat Port', game: 'Build A Boat', status: 'active', viewers: 134, location: 'Harbor', quality: '4K' },
+  { id: 6, name: 'CAM-06: Jailbreak Prison', game: 'Jailbreak', status: 'active', viewers: 289, location: 'Cell Block A', quality: 'HD' },
 ];
 
 const mockStats = {
@@ -33,6 +42,7 @@ const mockStats = {
 export default function Index() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
+  const [selectedCamera, setSelectedCamera] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState('home');
 
   const filteredPlayers = mockPlayers.filter(p => 
@@ -57,13 +67,13 @@ export default function Index() {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold glitch">ROBLOX TRACKER</h1>
-                  <p className="text-xs text-muted-foreground">СИСТЕМА МОНИТОРИНГА v2.4</p>
+                  <p className="text-xs text-muted-foreground">SURVEILLANCE SYSTEM v2.4</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span className="text-sm text-muted-foreground">АКТИВНО</span>
+                  <span className="text-sm text-muted-foreground">ACTIVE</span>
                 </div>
                 <Badge variant="destructive" className="animate-pulse">
                   <Icon name="AlertTriangle" size={12} className="mr-1" />
@@ -78,10 +88,11 @@ export default function Index() {
           <div className="container mx-auto px-4">
             <div className="flex gap-1">
               {[
-                { id: 'home', label: 'ГЛАВНАЯ', icon: 'Home' },
-                { id: 'tracking', label: 'ОТСЛЕЖИВАНИЕ', icon: 'Crosshair' },
-                { id: 'stats', label: 'СТАТИСТИКА', icon: 'BarChart3' },
-                { id: 'messages', label: 'СООБЩЕНИЯ', icon: 'MessageSquare' },
+                { id: 'home', label: 'HOME', icon: 'Home' },
+                { id: 'tracking', label: 'TRACKING', icon: 'Crosshair' },
+                { id: 'cameras', label: 'CAMERAS', icon: 'Video' },
+                { id: 'stats', label: 'STATISTICS', icon: 'BarChart3' },
+                { id: 'messages', label: 'MESSAGES', icon: 'MessageSquare' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -105,10 +116,10 @@ export default function Index() {
             <div className="space-y-6 animate-fade-in">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
-                  { label: 'ВСЕГО ЦЕЛЕЙ', value: mockStats.totalTracked, icon: 'Users', color: 'text-blue-400' },
-                  { label: 'ОНЛАЙН СЕЙЧАС', value: mockStats.activeNow, icon: 'Activity', color: 'text-green-400' },
-                  { label: 'ПЕРЕХВАЧЕНО', value: mockStats.messagesIntercepted, icon: 'Mail', color: 'text-yellow-400' },
-                  { label: 'ДАННЫХ', value: mockStats.dataCollected, icon: 'Database', color: 'text-purple-400' },
+                  { label: 'TOTAL TARGETS', value: mockStats.totalTracked, icon: 'Users', color: 'text-blue-400' },
+                  { label: 'ONLINE NOW', value: mockStats.activeNow, icon: 'Activity', color: 'text-green-400' },
+                  { label: 'INTERCEPTED', value: mockStats.messagesIntercepted, icon: 'Mail', color: 'text-yellow-400' },
+                  { label: 'DATA STORED', value: mockStats.dataCollected, icon: 'Database', color: 'text-purple-400' },
                 ].map((stat, idx) => (
                   <Card key={idx} className="p-4 bg-card/80 backdrop-blur-sm border-border hover:border-primary/50 transition-colors">
                     <div className="flex items-center justify-between mb-2">
@@ -125,10 +136,10 @@ export default function Index() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold flex items-center gap-2">
                     <Icon name="Radio" className="text-primary" size={20} />
-                    АКТИВНЫЕ ЦЕЛИ
+                    ACTIVE TARGETS
                   </h2>
                   <Badge variant="outline" className="text-green-400 border-green-400">
-                    {mockPlayers.filter(p => p.status === 'online' || p.status === 'ingame').length} ОНЛАЙН
+                    {mockPlayers.filter(p => p.status === 'online' || p.status === 'ingame').length} ONLINE
                   </Badge>
                 </div>
                 <ScrollArea className="h-[400px]">
@@ -153,7 +164,7 @@ export default function Index() {
                         <div className="flex items-center gap-3">
                           <div className="text-right">
                             <div className="text-sm text-muted-foreground">{player.playtime}</div>
-                            <div className="text-xs text-muted-foreground">Уровень {player.level}</div>
+                            <div className="text-xs text-muted-foreground">Level {player.level}</div>
                           </div>
                           <div className={`w-2 h-2 rounded-full ${
                             player.status === 'online' || player.status === 'ingame' ? 'bg-green-500' : 'bg-gray-500'
@@ -172,18 +183,18 @@ export default function Index() {
               <Card className="p-6 bg-card/80 backdrop-blur-sm border-border">
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                   <Icon name="Search" className="text-primary" size={20} />
-                  ПОИСК ИГРОКА
+                  PLAYER SEARCH
                 </h2>
                 <div className="flex gap-2 mb-6">
                   <Input
-                    placeholder="Введите username..."
+                    placeholder="Enter username..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="flex-1 bg-background border-border"
                   />
                   <Button className="bg-primary hover:bg-primary/90">
                     <Icon name="ScanLine" size={16} className="mr-2" />
-                    СКАНИРОВАТЬ
+                    SCAN
                   </Button>
                 </div>
 
@@ -201,24 +212,110 @@ export default function Index() {
                             <div className="font-bold text-lg mb-1">{player.username}</div>
                             <div className="flex flex-wrap gap-2 mb-2">
                               <Badge variant={player.status === 'online' || player.status === 'ingame' ? 'default' : 'secondary'}>
-                                {player.status === 'online' ? 'ОНЛАЙН' : player.status === 'ingame' ? 'В ИГРЕ' : 'ОФФЛАЙН'}
+                                {player.status === 'online' ? 'ONLINE' : player.status === 'ingame' ? 'IN-GAME' : 'OFFLINE'}
                               </Badge>
-                              <Badge variant="outline">Уровень {player.level}</Badge>
+                              <Badge variant="outline">Level {player.level}</Badge>
                             </div>
                             <div className="text-sm text-muted-foreground space-y-1">
-                              <div>🎮 Последняя игра: {player.game}</div>
-                              <div>⏱️ Наиграно: {player.playtime}</div>
-                              <div>👁️ Последняя активность: {player.lastSeen}</div>
+                              <div>🎮 Last game: {player.game}</div>
+                              <div>⏱️ Playtime: {player.playtime}</div>
+                              <div>👁️ Last activity: {player.lastSeen}</div>
                             </div>
                           </div>
                         </div>
                         <Button size="sm" variant="outline" className="border-primary text-primary">
                           <Icon name="Eye" size={14} className="mr-1" />
-                          ДЕТАЛИ
+                          DETAILS
                         </Button>
                       </div>
                     </Card>
                   ))}
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === 'cameras' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {mockCameras.map((camera) => (
+                  <Card key={camera.id} className="p-0 bg-card/80 backdrop-blur-sm border-border overflow-hidden hover:border-primary/50 transition-colors">
+                    <div className="relative aspect-video bg-muted/30 flex items-center justify-center cursor-pointer" onClick={() => setSelectedCamera(camera.id)}>
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
+                      <div className="absolute top-3 left-3 flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          camera.status === 'active' ? 'bg-red-500 animate-pulse' : 'bg-yellow-500'
+                        }`} />
+                        <span className="text-xs font-mono bg-black/50 px-2 py-1 rounded">
+                          {camera.status === 'active' ? 'LIVE' : 'REC'}
+                        </span>
+                      </div>
+                      <div className="absolute top-3 right-3">
+                        <Badge variant="outline" className="bg-black/50 border-primary/50">
+                          {camera.quality}
+                        </Badge>
+                      </div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center relative z-10">
+                          <Icon name="Video" className="text-primary/50 mx-auto mb-2" size={64} />
+                          <div className="w-12 h-12 border-2 border-primary/50 rounded-full absolute top-0 left-1/2 -translate-x-1/2 animate-ping" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 scan-line" />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 className="font-bold mb-1">{camera.name}</h3>
+                          <p className="text-sm text-muted-foreground">{camera.game}</p>
+                        </div>
+                        <Button size="sm" variant="outline" className="border-primary text-primary">
+                          <Icon name="Maximize2" size={14} className="mr-1" />
+                          VIEW
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Icon name="MapPin" size={12} />
+                          {camera.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Icon name="Eye" size={12} />
+                          {camera.viewers} watching
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="p-6 bg-card/80 backdrop-blur-sm border-border">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <Icon name="Monitor" className="text-primary" size={20} />
+                  CAMERA CONTROL PANEL
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-muted-foreground">Active Cameras</span>
+                      <Icon name="Video" className="text-green-400" size={16} />
+                    </div>
+                    <div className="text-2xl font-bold">{mockCameras.filter(c => c.status === 'active').length}/{mockCameras.length}</div>
+                  </div>
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-muted-foreground">Total Viewers</span>
+                      <Icon name="Users" className="text-blue-400" size={16} />
+                    </div>
+                    <div className="text-2xl font-bold">{mockCameras.reduce((acc, c) => acc + c.viewers, 0)}</div>
+                  </div>
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-muted-foreground">Recording</span>
+                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                    </div>
+                    <div className="text-2xl font-bold">{mockCameras.filter(c => c.status === 'recording').length} feeds</div>
+                  </div>
                 </div>
               </Card>
             </div>
@@ -230,7 +327,7 @@ export default function Index() {
                 <Card className="p-6 bg-card/80 backdrop-blur-sm border-border">
                   <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Icon name="TrendingUp" className="text-primary" size={20} />
-                    АКТИВНОСТЬ ПО ВРЕМЕНИ
+                    ACTIVITY BY TIME
                   </h2>
                   <div className="space-y-3">
                     {['00:00-06:00', '06:00-12:00', '12:00-18:00', '18:00-00:00'].map((time, idx) => {
@@ -256,7 +353,7 @@ export default function Index() {
                 <Card className="p-6 bg-card/80 backdrop-blur-sm border-border">
                   <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Icon name="Gamepad2" className="text-primary" size={20} />
-                    ПОПУЛЯРНЫЕ ИГРЫ
+                    POPULAR GAMES
                   </h2>
                   <div className="space-y-3">
                     {[
@@ -268,7 +365,7 @@ export default function Index() {
                     ].map((game) => (
                       <div key={game.name} className="flex items-center justify-between p-2 rounded bg-muted/30">
                         <span className="text-sm">{game.name}</span>
-                        <Badge variant="secondary">{game.players} игроков</Badge>
+                        <Badge variant="secondary">{game.players} players</Badge>
                       </div>
                     ))}
                   </div>
@@ -278,7 +375,7 @@ export default function Index() {
               <Card className="p-6 bg-card/80 backdrop-blur-sm border-border">
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                   <Icon name="MapPin" className="text-primary" size={20} />
-                  КАРТА АКТИВНОСТИ
+                  ACTIVITY MAP
                 </h2>
                 <div className="h-[300px] bg-muted/30 rounded-lg flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 opacity-20">
@@ -298,8 +395,8 @@ export default function Index() {
                   </div>
                   <div className="relative z-10 text-center">
                     <Icon name="Globe" className="text-primary mx-auto mb-2" size={48} />
-                    <p className="text-muted-foreground">ГЛОБАЛЬНОЕ ПОКРЫТИЕ</p>
-                    <p className="text-2xl font-bold mt-2">{mockStats.activeNow} активных точек</p>
+                    <p className="text-muted-foreground">GLOBAL COVERAGE</p>
+                    <p className="text-2xl font-bold mt-2">{mockStats.activeNow} active nodes</p>
                   </div>
                 </div>
               </Card>
@@ -312,11 +409,11 @@ export default function Index() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold flex items-center gap-2">
                     <Icon name="Wifi" className="text-primary" size={20} />
-                    ПЕРЕХВАЧЕННЫЕ СООБЩЕНИЯ
+                    INTERCEPTED MESSAGES
                   </h2>
                   <Badge variant="destructive" className="animate-pulse">
                     <Icon name="Radio" size={12} className="mr-1" />
-                    ПРОСЛУШКА АКТИВНА
+                    WIRETAP ACTIVE
                   </Badge>
                 </div>
 
@@ -362,15 +459,15 @@ export default function Index() {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between text-xs text-muted-foreground">
               <div className="flex items-center gap-4">
-                <span>СИСТЕМА v2.4.1</span>
+                <span>SYSTEM v2.4.1</span>
                 <span className="flex items-center gap-1">
                   <Icon name="Shield" size={12} />
-                  ЗАШИФРОВАНО
+                  ENCRYPTED
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span>СОЕДИНЕНИЕ УСТАНОВЛЕНО</span>
+                <span>CONNECTION ESTABLISHED</span>
               </div>
             </div>
           </div>
